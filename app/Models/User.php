@@ -44,4 +44,8 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function boxes(){
+        return $this->hasMany(Boxs::class,'user_id','id');
+    }
 }

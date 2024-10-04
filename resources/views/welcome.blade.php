@@ -917,7 +917,7 @@
                         </div>
                         <div class="sm:ml-6 sm:block">
                             <div class="flex space-x-4">
-                                <x-nav-link :href="'#'" class="text-xl px-4 py-2">
+                                <x-nav-link :href="'box/index'" class="text-xl px-4 py-2">
                                     {{ __('Mes Boxs') }}
                                 </x-nav-link>
                                 <x-nav-link :href="'#'" class="text-xl px-4 py-2">
