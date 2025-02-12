@@ -45,7 +45,13 @@ class User extends Authenticatable
         ];
     }
 
-    public function boxes(){
-        return $this->hasMany(Boxs::class,'user_id','id');
+    public function boxes()
+    {
+        return $this->hasMany(Boxs::class, 'user_id', 'id');
+    }
+
+    public function locataires()
+    {
+        return $this->hasMany(Locataire::class);
     }
 }
