@@ -911,7 +911,7 @@
                 <nav class="fixed top-0 left-0 right-0 flex justify-between p-3 bg-gray-500 mt-4">
                     <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
                         <div class="flex-shrink-0 flex items-center">
-                            <a href="{{ route('dashboard') }}">
+                            <a href="{{ route('welcome') }}">
                                 <x-application-logo class="block h-12 w-auto fill-current text-gray-800 dark:text-gray-200" />
                             </a>
                         </div>
@@ -920,7 +920,7 @@
                                 <x-nav-link :href="'box/index'" class="text-xl px-4 py-2">
                                     {{ __('Mes Boxs') }}
                                 </x-nav-link>
-                                <x-nav-link :href="'#'" class="text-xl px-4 py-2">
+                                <x-nav-link :href="'loc/index'" class="text-xl px-4 py-2">
                                     {{ __('Mes Locataires') }}
                                 </x-nav-link>
                                 <x-nav-link :href="'#'" class="text-xl px-4 py-2y">
