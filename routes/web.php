@@ -3,6 +3,8 @@
 use App\Http\Controllers\BoxsController;
 use App\Http\Controllers\LocataireController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ContratController;
+
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -32,6 +34,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/loc/{id}/edit', [LocataireController::class, 'edit'])->name('loc.edit');
     Route::put('/loc/{id}', [LocataireController::class, 'update'])->name('loc.update');
     Route::delete('/loc/{id}', [LocataireController::class, 'destroy'])->name('loc.destroy');
+
+    Route::get('/contrat', [ContratController::class, 'index'])->name('contrat.index'); // Liste des contrats
+    Route::get('/contrat/create', [ContratController::class, 'create'])->name('contrat.create'); // Formulaire de création
+    Route::post('/contrat', [ContratController::class, 'store'])->name('contrat.store'); // Enregistrement d'un contrat
+    Route::get('/contrat/{contrat}/edit', [ContratController::class, 'edit'])->name('contrat.edit'); // Formulaire de modification
+    Route::put('/contrat/{contrat}', [ContratController::class, 'update'])->name('contrat.update'); // Mise à jour d'un contrat
+    Route::delete('/contrat/{contrat}', [ContratController::class, 'destroy'])->name('contrat.destroy'); // Suppression d'un contrat
 });
 
 require __DIR__.'/auth.php';

@@ -923,7 +923,7 @@
                                 <x-nav-link :href="'loc/index'" class="text-xl px-4 py-2">
                                     {{ __('Mes Locataires') }}
                                 </x-nav-link>
-                                <x-nav-link :href="'#'" class="text-xl px-4 py-2y">
+                                <x-nav-link :href="'contrat/index'" class="text-xl px-4 py-2y">
                                     {{ __('Mes Contrats') }}
                                 </x-nav-link>
                                 <x-nav-link :href="'#'" class="text-xl px-4 py-2y">
