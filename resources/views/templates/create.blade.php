@@ -1,4 +1,8 @@
 <x-app-layout>
+
+    <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+    <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Créer un modèle de contrat') }}
@@ -36,20 +40,22 @@
             </div>
         </div>
     </div>
-</x-app-layout>
+    @push('scripts')
+        <script>
+            console.log('script chargé et prêt');
+            document.addEventListener('DOMContentLoaded', function() {
+                var quill = new Quill('#editor-container', {
+                    theme: 'snow'
 
-@push('scripts')
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            var quill = new Quill('#editor-container', {
-                theme: 'snow'
+                });
+                console.log('Quill initialized:', quill); // Ajout du log pour confirmation
+
+                const form = document.querySelector('form');
+                form.onsubmit = function() {
+                    const content = document.querySelector('#template_content');
+                    content.value = quill.root.innerHTML;
+                };
             });
-
-            const form = document.querySelector('form');
-            form.onsubmit = function() {
-                const content = document.querySelector('#template_content');
-                content.value = quill.root.innerHTML;
-            };
-        });
-    </script>
-@endpush
+        </script>
+    @endpush
+</x-app-layout>
