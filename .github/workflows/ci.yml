@@ -18,4 +18,5 @@ jobs:
           port: 22
           script: |
             cd ${{ secrets.PROJECT_PATH }}
+            git config --global --add safe.directory ${{ secrets.PROJECT_PATH }}
             git pull
