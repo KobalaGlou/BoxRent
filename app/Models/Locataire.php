@@ -39,4 +39,9 @@ class Locataire extends Model
     {
         return $this->hasOne(Boxs::class, 'locataire_id');
     }
+
+    public function contrats()
+    {
+        return $this->hasMany(Contrat::class);
+    }
 }
