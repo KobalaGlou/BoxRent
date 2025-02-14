@@ -8,7 +8,7 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             @if (session('success'))
-                <div class="bg-blue-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
+                <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative mb-4"
                     role="alert">
                     <strong class="font-bold">Succès !</strong>
                     <span class="block sm:inline">{{ session('success') }}</span>
@@ -20,7 +20,7 @@
                     <!-- Bouton pour créer une nouvelle box -->
                     <div class="mb-6">
                         <a href="{{ route('boxs.create') }}"
-                            class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                            class="inline-block bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded">
                             Ajouter une nouvelle box
                         </a>
                     </div>
