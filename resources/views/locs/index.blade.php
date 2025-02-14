@@ -18,7 +18,7 @@
                 <div class="p-6 bg-white border-b border-gray-200">
                     <!-- Bouton pour ajouter un nouveau locataire -->
                     <div class="mb-6">
-                        <a href="{{ route('loc.create') }}"
+                        <a href="{{ route('locs.create') }}"
                            class="inline-block bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
                             Ajouter un nouveau locataire
                         </a>
@@ -45,11 +45,11 @@
                                         <td class="py-2 px-4 border-b text-center">{{ $locataire->email }}</td>
                                         <td class="py-2 px-4 border-b text-center">{{ $locataire->adresse }}</td>
                                         <td class="py-2 px-4 border-b text-right">
-                                            <a href="{{ route('loc.edit', $locataire->id) }}"
+                                            <a href="{{ route('locs.edit', $locataire->id) }}"
                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
                                                 Modifier
                                             </a>
-                                            <form action="{{ route('loc.destroy', $locataire->id) }}" method="POST"
+                                            <form action="{{ route('locs.destroy', $locataire->id) }}" method="POST"
                                                   class="inline-block"
                                                   onsubmit="return confirm('Voulez-vous vraiment supprimer ce locataire ?');">
                                                 @csrf

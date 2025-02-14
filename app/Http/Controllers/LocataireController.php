@@ -12,13 +12,13 @@ class LocataireController extends Controller
     {
         $locataires = Locataire::where('user_id', auth()->id())->get();
 
-        return view('loc.index', compact('locataires'));
+        return view('locs.index', compact('locataires'));
     }
 
     // Affiche le formulaire pour créer un nouveau locataire
     public function create()
     {
-        return view('loc.create');
+        return view('locs.create');
     }
 
     // Enregistre un nouveau locataire dans la base de données
@@ -40,7 +40,7 @@ class LocataireController extends Controller
         Locataire::create($validatedData);
 
         // Redirection avec message de succès
-        return redirect()->route('loc.index')->with('success', 'Locataire créé avec succès.');
+        return redirect()->route('locs.index')->with('success', 'Locataire créé avec succès.');
     }
 
     // Affiche le formulaire d'édition d'un locataire
@@ -48,7 +48,7 @@ class LocataireController extends Controller
     {
         $locataire = Locataire::where('user_id', auth()->id())->findOrFail($id);
 
-        return view('loc.edit', compact('locataire'));
+        return view('locs.edit', compact('locataire'));
     }
 
     // Met à jour un locataire existant
@@ -70,7 +70,7 @@ class LocataireController extends Controller
         $locataire->update($validatedData);
 
         // Redirection avec message de succès
-        return redirect()->route('loc.index')->with('success', 'Locataire mis à jour avec succès.');
+        return redirect()->route('locs.index')->with('success', 'Locataire mis à jour avec succès.');
     }
 
     // Supprime un locataire
@@ -80,6 +80,6 @@ class LocataireController extends Controller
 
         $locataire->delete();
 
-        return redirect()->route('loc.index')->with('success', 'Locataire supprimé avec succès.');
+        return redirect()->route('locs.index')->with('success', 'Locataire supprimé avec succès.');
     }
 }

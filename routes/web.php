@@ -9,10 +9,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
-
-Route::get('/', function () {
-    return view('welcome');
 })->middleware(['auth', 'verified'])->name('welcome');
 
 Route::middleware('auth')->group(function () {
@@ -28,19 +24,19 @@ Route::middleware('auth')->group(function () {
     Route::put('/boxs/{id}', [BoxsController::class, 'update'])->name('boxs.update');
     Route::delete('/boxs/{id}', [BoxsController::class, 'destroy'])->name('boxs.destroy');
 
-    Route::get('/loc/index',[LocataireController::class,'index'])->name('loc.index');
-    Route::get('/loc/create', [LocataireController::class, 'create'])->name('loc.create');
-    Route::post('/loc', [LocataireController::class, 'store'])->name('loc.store');
-    Route::get('/loc/{id}/edit', [LocataireController::class, 'edit'])->name('loc.edit');
-    Route::put('/loc/{id}', [LocataireController::class, 'update'])->name('loc.update');
-    Route::delete('/loc/{id}', [LocataireController::class, 'destroy'])->name('loc.destroy');
+    Route::get('/locs',[LocataireController::class,'index'])->name('locs.index');
+    Route::get('/locs/create', [LocataireController::class, 'create'])->name('locs.create');
+    Route::post('/locs', [LocataireController::class, 'store'])->name('locs.store');
+    Route::get('/locs/{id}/edit', [LocataireController::class, 'edit'])->name('locs.edit');
+    Route::put('/locs/{id}', [LocataireController::class, 'update'])->name('locs.update');
+    Route::delete('/locs/{id}', [LocataireController::class, 'destroy'])->name('locs.destroy');
 
-    Route::get('/contrat', [ContratController::class, 'index'])->name('contrat.index'); // Liste des contrats
-    Route::get('/contrat/create', [ContratController::class, 'create'])->name('contrat.create'); // Formulaire de création
-    Route::post('/contrat', [ContratController::class, 'store'])->name('contrat.store'); // Enregistrement d'un contrat
-    Route::get('/contrat/{contrat}/edit', [ContratController::class, 'edit'])->name('contrat.edit'); // Formulaire de modification
-    Route::put('/contrat/{contrat}', [ContratController::class, 'update'])->name('contrat.update'); // Mise à jour d'un contrat
-    Route::delete('/contrat/{contrat}', [ContratController::class, 'destroy'])->name('contrat.destroy'); // Suppression d'un contrat
+    Route::get('/contrats', [ContratController::class, 'index'])->name('contrats.index'); // Liste des contrats
+    Route::get('/contrats/create', [ContratController::class, 'create'])->name('contrats.create'); // Formulaire de création
+    Route::post('/contrats', [ContratController::class, 'store'])->name('contrats.store'); // Enregistrement d'un contrat
+    Route::get('/contrats/{contrat}/edit', [ContratController::class, 'edit'])->name('contrats.edit'); // Formulaire de modification
+    Route::put('/contrats/{contrat}', [ContratController::class, 'update'])->name('contrats.update'); // Mise à jour d'un contrat
+    Route::delete('/contrats/{contrat}', [ContratController::class, 'destroy'])->name('contrats.destroy'); // Suppression d'un contrat
 });
 
 require __DIR__.'/auth.php';

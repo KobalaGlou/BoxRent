@@ -55,7 +55,7 @@ class ContratController extends Controller
             abort(403, 'Accès non autorisé.');
         }
 
-        return view('contrats.show', compact('contrat'));
+        return view('contrats.show', compact('contrats'));
     }
 
     public function edit(Contrat $contrat)
@@ -68,7 +68,7 @@ class ContratController extends Controller
         $boxes = Boxs::where('user_id', Auth::id())->get();
         $locataires = Locataire::where('user_id', Auth::id())->get();
 
-        return view('contrats.edit', compact('contrat', 'boxes', 'locataires'));
+        return view('contrats.edit', compact('contrats', 'boxes', 'locataires'));
     }
 
     public function update(Request $request, Contrat $contrat)

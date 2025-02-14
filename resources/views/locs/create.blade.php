@@ -20,7 +20,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('loc.store') }}" method="POST">
+                    <form action="{{ route('locs.store') }}" method="POST">
                         @csrf
                         <div class="mb-4">
                             <label for="nom" class="block text-gray-700 font-bold mb-2">Nom :</label>
@@ -51,7 +51,7 @@
                             <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
                                 Ajouter le locataire
                             </button>
-                            <a href="{{ route('loc.index') }}" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
+                            <a href="{{ route('locs.index') }}" class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800">
                                 Annuler
                             </a>
                         </div>
