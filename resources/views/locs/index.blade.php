@@ -46,7 +46,7 @@
                                         <td class="py-2 px-4 border-b text-center">{{ $locataire->adresse }}</td>
                                         <td class="py-2 px-4 border-b text-right">
                                             <a href="{{ route('locs.edit', $locataire->id) }}"
-                                               class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">
+                                               class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-2 px-4 rounded mr-2">
                                                 Modifier
                                             </a>
                                             <form action="{{ route('locs.destroy', $locataire->id) }}" method="POST"

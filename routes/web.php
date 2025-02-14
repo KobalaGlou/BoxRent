@@ -4,6 +4,7 @@ use App\Http\Controllers\BoxsController;
 use App\Http\Controllers\LocataireController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ContratController;
+use App\Http\Controllers\TemplateController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -17,7 +18,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
 
-    Route::get('/box/index',[BoxsController::class,'index'])->name('boxs.index');
+    Route::get('/boxs',[BoxsController::class,'index'])->name('boxs.index');
     Route::get('/boxs/create', [BoxsController::class, 'create'])->name('boxs.create');
     Route::post('/boxs', [BoxsController::class, 'store'])->name('boxs.store');
     Route::get('/boxs/{id}/edit', [BoxsController::class, 'edit'])->name('boxs.edit');
@@ -37,6 +38,13 @@ Route::middleware('auth')->group(function () {
     Route::get('/contrats/{contrat}/edit', [ContratController::class, 'edit'])->name('contrats.edit'); // Formulaire de modification
     Route::put('/contrats/{contrat}', [ContratController::class, 'update'])->name('contrats.update'); // Mise à jour d'un contrat
     Route::delete('/contrats/{contrat}', [ContratController::class, 'destroy'])->name('contrats.destroy'); // Suppression d'un contrat
+
+    Route::get('/templates', [TemplateController::class, 'index'])->name('templates.index');
+    Route::get('/templates/create', [TemplateController::class, 'create'])->name('templates.create');
+    Route::post('/templates', [TemplateController::class, 'store'])->name('templates.store');
+    Route::get('/templates/{template}/edit', [TemplateController::class, 'edit'])->name('templates.edit');
+    Route::put('/templates/{template}', [TemplateController::class, 'update'])->name('templates.update');
+    Route::delete('/templates/{template}', [TemplateController::class, 'destroy'])->name('templates.destroy');
 });
 
 require __DIR__.'/auth.php';
