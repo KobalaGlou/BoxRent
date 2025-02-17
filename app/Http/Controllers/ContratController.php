@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Contrat;
 use App\Models\Boxs;
 use App\Models\Locataire;
+use App\Models\Template;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -19,34 +20,69 @@ class ContratController extends Controller
 
     public function create()
     {
-        // Récupère les locataires et les boxes de l'utilisateur connecté
-        $boxes = Boxs::where('user_id', Auth::id())->get();
-        $locataires = Locataire::where('user_id', Auth::id())->get();
+        $templates = Template::where('user_id', auth()->id())->get();
+        $locataires = Locataire::where('user_id', auth()->id())->get();
+        $boxes = Boxs::where('user_id', auth()->id())->get();
 
-        return view('contrats.create', compact('boxes', 'locataires'));
+        return view('contrats.create', compact('templates', 'locataires', 'boxes'));
+    }
+
+    public function edit(Contrat $contrat)
+    {
+        $templates = Template::where('user_id', auth()->id())->get();
+        $locataires = Locataire::where('user_id', auth()->id())->get();
+        $boxes = Boxs::where('user_id', auth()->id())->get();
+
+        return view('contrats.edit', compact('contrat', 'templates', 'locataires', 'boxes'));
     }
 
     public function store(Request $request)
     {
-        $validated = $request->validate([
+        $request->validate([
             'date_debut' => 'required|date',
             'date_fin' => 'nullable|date|after:date_debut',
             'prix_mois' => 'required|numeric|min:0',
-            'box_id' => 'required|exists:boxes,id',
             'locataire_id' => 'required|exists:locataires,id',
+            'box_id' => 'required|exists:boxes,id',
+            'template_id' => 'nullable|exists:templates,id'
         ]);
 
-        Contrat::create([
-            'date_debut' => $validated['date_debut'],
-            'date_fin' => $validated['date_fin'],
-            'prix_mois' => $validated['prix_mois'],
-            'user_id' => Auth::id(),
-            'box_id' => $validated['box_id'],
-            'locataire_id' => $validated['locataire_id'],
-        ]);
+        $contrat =Contrat::create([
+            'user_id' => auth()->id(),
+            'date_debut' => $request->date_debut,
+            'date_fin' => $request->date_fin,
+            'prix_mois' => $request->prix_mois,
+            'locataire_id' => $request->locataire_id,
+            'box_id' => $request->box_id,
+            'template_id' => $request->template_id
+        ]);  
 
         return redirect()->route('contrats.index')->with('success', 'Contrat créé avec succès.');
     }
+
+    public function update(Request $request, Contrat $contrat)
+    {
+        $request->validate([
+            'date_debut' => 'required|date',
+            'date_fin' => 'nullable|date|after:date_debut',
+            'prix_mois' => 'required|numeric|min:0',
+            'locataire_id' => 'required|exists:locataires,id',
+            'box_id' => 'required|exists:boxes,id',
+            'template_id' => 'nullable|exists:templates,id'
+        ]);
+
+        $contrat->update([
+            'date_debut' => $request->date_debut,
+            'date_fin' => $request->date_fin,
+            'prix_mois' => $request->prix_mois,
+            'locataire_id' => $request->locataire_id,
+            'box_id' => $request->box_id,
+            'template_id' => $request->template_id
+        ]);
+
+        return redirect()->route('contrats.index')->with('success', 'Contrat mis à jour avec succès.');
+    }
+
 
     public function show(Contrat $contrat)
     {
@@ -56,39 +92,6 @@ class ContratController extends Controller
         }
 
         return view('contrats.show', compact('contrats'));
-    }
-
-    public function edit(Contrat $contrat)
-    {
-        // Vérifie si le contrat appartient à l'utilisateur connecté
-        if ($contrat->user_id !== Auth::id()) {
-            abort(403, 'Accès non autorisé.');
-        }
-
-        $boxes = Boxs::where('user_id', Auth::id())->get();
-        $locataires = Locataire::where('user_id', Auth::id())->get();
-
-        return view('contrats.edit', compact('contrats', 'boxes', 'locataires'));
-    }
-
-    public function update(Request $request, Contrat $contrat)
-    {
-        // Vérifie si le contrat appartient à l'utilisateur connecté
-        if ($contrat->user_id !== Auth::id()) {
-            abort(403, 'Accès non autorisé.');
-        }
-
-        $validated = $request->validate([
-            'date_debut' => 'required|date',
-            'date_fin' => 'nullable|date|after:date_debut',
-            'prix_mois' => 'required|numeric|min:0',
-            'box_id' => 'required|exists:boxes,id',
-            'locataire_id' => 'required|exists:locataires,id',
-        ]);
-
-        $contrat->update($validated);
-
-        return redirect()->route('contrats.index')->with('success', 'Contrat mis à jour avec succès.');
     }
 
     public function destroy(Contrat $contrat)
@@ -103,5 +106,3 @@ class ContratController extends Controller
         return redirect()->route('contrats.index')->with('success', 'Contrat supprimé avec succès.');
     }
 }
-
-

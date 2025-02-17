@@ -15,7 +15,8 @@
                         </div>
                     @endif
 
-                    <a href="{{ route('contrats.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 inline-block">
+                    <a href="{{ route('contrats.create') }}"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 inline-block">
                         Ajouter un contrat
                     </a>
 
@@ -39,13 +40,29 @@
                                     <td class="py-2 px-4 border-b">{{ $contrat->date_fin }}</td>
                                     <td class="py-2 px-4 border-b">{{ $contrat->prix_mois }} €</td>
                                     <td class="py-2 px-4 border-b">
-                                        <a href="{{ route('contrats.edit', $contrat->id) }}" class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded">
+
+                                        @if ($contrat->template_id)
+                                            <a href="{{ route('contrats.render', ['template' => $contrat->template_id, 'contrat' => $contrat->id]) }}"
+                                                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
+                                                Aperçu
+                                            </a>
+                                        @else
+                                            <span class="text-gray-500">Aucun modèle</span>
+                                        @endif
+
+
+
+                                        <a href="{{ route('contrats.edit', $contrat->id) }}"
+                                            class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded">
                                             Modifier
                                         </a>
-                                        <form action="{{ route('contrats.destroy', $contrat->id) }}" method="POST" class="inline-block">
+                                        <form action="{{ route('contrats.destroy', $contrat->id) }}" method="POST"
+                                            class="inline-block">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce contrat ?')">
+                                            <button type="submit"
+                                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-2 rounded"
+                                                onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce contrat ?')">
                                                 Supprimer
                                             </button>
                                         </form>

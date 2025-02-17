@@ -11,26 +11,31 @@ class TemplateController extends Controller
 {
     public function index()
     {
-        $templates = Auth::user()->templates; // Récupère les templates de l'utilisateur connecté
+        $templates = Template::where('user_id', auth()->id())->get();
+
         return view('templates.index', compact('templates'));
     }
+
 
     public function showContratTemplate(Template $template, Contrat $contrat)
     {
         $content = $template->content;
 
+        // Liste des valeurs à insérer dans le contrat
         $placeholders = [
-            '{nom}' => $contrat->locataire->nom,
-            '{date_debut}' => $contrat->date_debut,
-            '{date_fin}' => $contrat->date_fin,
-            '{prix_mois}' => $contrat->prix_mois,
-            '{box_info}' => $contrat->box->description, // Exemple de champ dans la box
+            '[NAME]'   => $contrat->locataire->nom,
+            '[BOX]'    => $contrat->box->description,
+            '[DATE_D]' => $contrat->date_debut->format('d/m/Y'),
+            '[DATE_F]' => $contrat->date_fin->format('d/m/Y'),
+            '[PRIX]'   => number_format($contrat->prix_mois, 2, ',', ' ') . ' €',
         ];
 
+        // Remplacement des balises
         $renderedContent = str_replace(array_keys($placeholders), array_values($placeholders), $content);
 
-        return view('contrats.render', compact('renderedContent'));
+        return view('contrats.render', compact('renderedContent', 'template'));
     }
+
 
     public function create()
     {
@@ -39,6 +44,7 @@ class TemplateController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
             'name' => 'required|string|max:255',
             'content' => 'required',
@@ -52,6 +58,7 @@ class TemplateController extends Controller
 
         return redirect()->route('templates.index')->with('success', 'Template créé avec succès.');
     }
+
 
     public function edit(Template $template)
     {

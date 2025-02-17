@@ -38,6 +38,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/contrats/{contrat}/edit', [ContratController::class, 'edit'])->name('contrats.edit'); // Formulaire de modification
     Route::put('/contrats/{contrat}', [ContratController::class, 'update'])->name('contrats.update'); // Mise à jour d'un contrat
     Route::delete('/contrats/{contrat}', [ContratController::class, 'destroy'])->name('contrats.destroy'); // Suppression d'un contrat
+    Route::get('/contrats/render/{template}/{contrat}', [TemplateController::class, 'showContratTemplate'])
+    ->name('contrats.render');
+
+
 
     Route::get('/templates', [TemplateController::class, 'index'])->name('templates.index');
     Route::get('/templates/create', [TemplateController::class, 'create'])->name('templates.create');

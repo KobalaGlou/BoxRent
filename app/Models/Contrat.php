@@ -16,7 +16,14 @@ class Contrat extends Model
         'user_id',
         'locataire_id',
         'box_id',
+        'template_id'
     ];
+
+    protected $casts = [
+        'date_debut' => 'date',
+        'date_fin' => 'date',
+    ];
+    
 
     // Relation avec l'utilisateur (propriétaire)
     public function user()
@@ -34,5 +41,10 @@ class Contrat extends Model
     public function box()
     {
         return $this->belongsTo(Boxs::class);
+    }
+
+    public function template()
+    {
+        return $this->belongsTo(Template::class);
     }
 }
