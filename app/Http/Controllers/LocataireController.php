@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Locataire;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 
 class LocataireController extends Controller
 {
@@ -71,6 +72,40 @@ class LocataireController extends Controller
 
         // Redirection avec message de succès
         return redirect()->route('locs.index')->with('success', 'Locataire mis à jour avec succès.');
+    }
+
+    public function export()
+    {
+        $fileName = 'locataires_' . now()->format('Y-m-d') . '.csv';
+
+        $response = new StreamedResponse(function () {
+            $handle = fopen('php://output', 'w');
+
+            // En-tête du fichier CSV
+            fputcsv($handle, ['ID', 'Nom', 'Email', 'Téléphone', 'Adresse', 'Compte Bancaire']);
+
+            // Récupération des locataires et écriture dans le CSV
+            Locataire::chunk(100, function ($locataires) use ($handle) {
+                foreach ($locataires as $locataire) {
+                    fputcsv($handle, [
+                        $locataire->id,
+                        $locataire->nom,
+                        $locataire->email,
+                        $locataire->tel,
+                        $locataire->adresse,
+                        $locataire->compte_bancaire,
+
+                    ]);
+                }
+            });
+
+            fclose($handle);
+        });
+
+        $response->headers->set('Content-Type', 'text/csv');
+        $response->headers->set('Content-Disposition', 'attachment; filename="' . $fileName . '"');
+
+        return $response;
     }
 
     // Supprime un locataire

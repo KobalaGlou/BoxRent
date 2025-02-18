@@ -33,6 +33,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/locs/{id}/edit', [LocataireController::class, 'edit'])->name('locs.edit');
     Route::put('/locs/{id}', [LocataireController::class, 'update'])->name('locs.update');
     Route::delete('/locs/{id}', [LocataireController::class, 'destroy'])->name('locs.destroy');
+    Route::get('/locs/export', [LocataireController::class, 'export'])->name('locs.export');
 
     Route::get('/contrats', [ContratController::class, 'index'])->name('contrats.index'); // Liste des contrats
     Route::get('/contrats/create', [ContratController::class, 'create'])->name('contrats.create'); // Formulaire de création
