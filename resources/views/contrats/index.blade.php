@@ -28,6 +28,7 @@
                                 <th class="py-2 px-4 border-b">Date Début</th>
                                 <th class="py-2 px-4 border-b">Date Fin</th>
                                 <th class="py-2 px-4 border-b">Prix Mensuel</th>
+                                <th class="py-2 px-4 border-b">Factures</th>
                                 <th class="py-2 px-4 border-b">Actions</th>
                             </tr>
                         </thead>
@@ -39,8 +40,33 @@
                                     <td class="py-2 px-4 border-b">{{ $contrat->date_debut }}</td>
                                     <td class="py-2 px-4 border-b">{{ $contrat->date_fin }}</td>
                                     <td class="py-2 px-4 border-b">{{ $contrat->prix_mois }} €</td>
-                                    <td class="py-2 px-4 border-b">
 
+                                    <!-- Colonne Factures -->
+                                    <td class="py-2 px-4 border-b text-center">
+                                        @php
+                                            $factures = $contrat->factures;
+                                        @endphp
+
+                                        @if ($factures->isNotEmpty())
+                                            <ul class="text-green-600 font-bold">
+                                                @foreach ($factures as $facture)
+                                                    <li>{{ $facture->numero }}</li>
+                                                @endforeach
+                                            </ul>
+                                        @else
+                                            <form action="{{ route('factures.generer', $contrat->id) }}" method="POST"
+                                                class="inline-block">
+                                                @csrf
+                                                <button type="submit"
+                                                    class="bg-green-500 hover:bg-green-700 text-white font-bold py-1 px-2 rounded">
+                                                    Générer
+                                                </button>
+                                            </form>
+                                        @endif
+                                    </td>
+
+                                    <!-- Colonne Actions -->
+                                    <td class="py-2 px-4 border-b">
                                         @if ($contrat->template_id)
                                             <a href="{{ route('contrats.render', ['template' => $contrat->template_id, 'contrat' => $contrat->id]) }}"
                                                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-2 rounded">
@@ -50,12 +76,11 @@
                                             <span class="text-gray-500">Aucun modèle</span>
                                         @endif
 
-
-
                                         <a href="{{ route('contrats.edit', $contrat->id) }}"
                                             class="bg-yellow-500 hover:bg-yellow-700 text-white font-bold py-1 px-2 rounded">
                                             Modifier
                                         </a>
+
                                         <form action="{{ route('contrats.destroy', $contrat->id) }}" method="POST"
                                             class="inline-block">
                                             @csrf
@@ -70,7 +95,7 @@
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="py-2 px-4 text-center">Aucun contrat trouvé.</td>
+                                    <td colspan="7" class="py-2 px-4 text-center">Aucun contrat trouvé.</td>
                                 </tr>
                             @endforelse
                         </tbody>

@@ -929,6 +929,9 @@
                                 <x-nav-link :href="'templates'" class="text-xl px-4 py-2y">
                                     {{ __('Mes templates') }}
                                 </x-nav-link>
+                                <x-nav-link :href="'factures/impayes'" class="text-xl px-4 py-2y">
+                                    {{ __('Mes factures') }}
+                                </x-nav-link>
                             </div>
                         </div>
                     </div>

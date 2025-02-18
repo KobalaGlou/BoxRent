@@ -23,7 +23,7 @@ class Contrat extends Model
         'date_debut' => 'date',
         'date_fin' => 'date',
     ];
-    
+
 
     // Relation avec l'utilisateur (propriétaire)
     public function user()
@@ -46,5 +46,10 @@ class Contrat extends Model
     public function template()
     {
         return $this->belongsTo(Template::class);
+    }
+
+    public function factures()
+    {
+        return $this->hasMany(Facture::class);
     }
 }
