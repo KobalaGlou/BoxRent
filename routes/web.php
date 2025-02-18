@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ContratController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\FactureController;
+use App\Http\Controllers\ImpotsController;
 
 use Illuminate\Support\Facades\Route;
 
@@ -41,7 +42,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/contrats/{contrat}', [ContratController::class, 'destroy'])->name('contrats.destroy'); // Suppression d'un contrat
     Route::get('/contrats/render/{template}/{contrat}', [TemplateController::class, 'showContratTemplate'])
         ->name('contrats.render');
-    Route::post('/contrats/{contrat}/generer-factures', [FactureController::class, 'genererFactures'])->name('factures.generer'); // Genère les factures associées à un contrat
+    Route::post('/factures/generer', [FactureController::class, 'genererFactures'])->name('factures.generer');
+    // Genère les factures du mois pour les contrats actifs qui n'ont pas encore été générées
 
 
     Route::get('/templates', [TemplateController::class, 'index'])->name('templates.index');
@@ -54,8 +56,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/factures/impayes', [FactureController::class, 'impayes'])->name('factures.impayes');
     Route::get('/factures/historique', [FactureController::class, 'historique'])->name('factures.historique');
-
     Route::put('/factures/{facture}', [FactureController::class, 'update'])->name('factures.update');
+
+    Route::get('/impots', [ImpotsController::class, 'index'])->name('impots.index');
+
 });
 
 require __DIR__ . '/auth.php';

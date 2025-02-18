@@ -45,39 +45,41 @@ class FactureController extends Controller
     }
 
 
-    // Générer les factures pour un contrat
-    public function genererFactures(Contrat $contrat)
+    // Générer les factures pour un contra
+
+    public function genererFactures()
     {
-        // Vérification de l'autorisation de l'utilisateur
-        if ($contrat->user_id !== Auth::id()) {
-            abort(403, 'Accès non autorisé.');
-        }
+        $dateActuelle = Carbon::now(); // Date actuelle
 
-        // Vérifier si les factures existent déjà
-        if ($contrat->factures()->exists()) {
-            return redirect()->route('contrats.index')->with('error', 'Les factures ont déjà été générées.');
-        }
+        // Récupérer tous les contrats actifs durant le mois en cours
+        $contrats = Contrat::whereDate('date_debut', '<=', $dateActuelle->endOfMonth())
+            ->whereDate('date_fin', '>=', $dateActuelle->startOfMonth())
+            ->get();
 
-        $dateDebut = Carbon::parse($contrat->date_debut);
-        $dateFin = Carbon::parse($contrat->date_fin);
-        $moisCount = $dateDebut->diffInMonths($dateFin) + 1;
 
-        for ($i = 0; $i < $moisCount; $i++) {
-            $dateFacture = $dateDebut->copy()->addMonths($i)->format('Ymd'); // Date de la facture
-            $idFacture = "{$dateFacture}_{$contrat->id}_" . ($i + 1); // Format YYYYMMDD_ContratID_Période
+        foreach ($contrats as $contrat) {
+            $dateFacture = $dateActuelle->format('Ymd'); // Format YYYYMMDD
+            $idFacture = "{$dateFacture}_{$contrat->id}_" . $dateActuelle->month; // ID unique
 
+            // Vérifier si la facture existe déjà
+            if (Facture::where('id', $idFacture)->exists()) {
+                continue; // Passer au contrat suivant
+            }
+
+            // Création de la facture
             Facture::create([
-                'id' => $idFacture, // L'ID devient la clé primaire
+                'id' => $idFacture,
                 'contrat_id' => $contrat->id,
                 'montant' => $contrat->prix_mois,
                 'date_creation' => now(),
-                'periode' => $i + 1,
+                'periode' => $dateActuelle->month,
                 'date_paiement' => null
             ]);
         }
 
-        return redirect()->route('contrats.index')->with('success', 'Factures générées avec succès.');
+        return redirect()->route('contrats.index')->with('success', 'Factures générées pour ce mois.');
     }
+
 
 
     // Mettre à jour une facture (ajout de la date de paiement)

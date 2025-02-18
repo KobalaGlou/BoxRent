@@ -932,6 +932,10 @@
                                 <x-nav-link :href="'factures/impayes'" class="text-xl px-4 py-2y">
                                     {{ __('Mes factures') }}
                                 </x-nav-link>
+                                <x-nav-link :href="route('impots.index')" :active="request()->routeIs('impots.index')">
+                                    {{ __('Mes Impôts') }}
+                                </x-nav-link>
+                                
                             </div>
                         </div>
                     </div>
